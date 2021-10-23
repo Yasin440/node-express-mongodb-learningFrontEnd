@@ -30,21 +30,42 @@ const Home = () => {
         })
             .then(res => res.json())
             .then(data => {
-                // setUsers([...users, data]);
-                const addedUser = data;
-                const newUsers = [...users, addedUser];
-                setUsers(newUsers);
+                // const addedUser = data;
+                // const newUsers = [...users, addedUser];
+                // setUsers(newUsers);
+                if (data.insertedId) {
+                    alert('Add Friend data successfully')
+                    event.target.reset();
+                    // nameRef.current.value = '';
+                    // educationRef.current.value = '';
+                    // jobRef.current.value = '';
+                }
             })
-        nameRef.current.value = '';
-        educationRef.current.value = '';
-        jobRef.current.value = '';
 
         event.preventDefault();
     }
 
+    //delete user from database
+    const handleDeleteUser = id => {
+        const confirm = window.confirm('Confirm to DELETE this user');
+        if (confirm) {
+            fetch(`http://localhost:4000/users/${id}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.deletedCount > 0) {
+                        alert('User DELETE successfully')
+                        const remaining = users.filter(u => u._id !== id);
+                        setUsers(remaining);
+                    }
+                })
+        }
+    }
+
     return (
         <div className='container'>
-            <h1 className='pt-5 text-center text-primary'>This is My Home: {users.length}</h1>
+            <h1 className='pt-5 text-center text-primary'>This is My Home</h1>
             <div className='d-flex mt-5'>
                 <form onSubmit={handleAddData} className="row g-3 w-50 m-auto">
                     <div className="col-md-12">
@@ -63,11 +84,16 @@ const Home = () => {
                         <button type="submit" className="btn btn-primary">Add User</button>
                     </div>
                 </form>
-                <ul>
+                <ol>
                     {
-                        users.map(user => <li key={user.id}><span className="text-danger">Name:</span> {user.userName}, <span className="text-danger">Edu:</span> {user.education}  <span className="text-danger">Job:</span> {user.job}</li>)
+                        users.map(user => <li key={user._id}>
+                            <span className="text-danger">Name:</span> {user.userName},
+                            <span className="text-danger">Edu:</span> {user.education},
+                            <span className="text-danger">Job:</span> {user.job}
+                            <i onClick={() => handleDeleteUser(user._id)} style={{ cursor: 'pointer' }} className="far fa-trash-alt ps-2 text-danger"></i>
+                        </li>)
                     }
-                </ul>
+                </ol>
             </div>
         </div>
     );
