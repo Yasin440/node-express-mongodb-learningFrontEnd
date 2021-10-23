@@ -1,0 +1,31 @@
+.header{
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.navbar{
+    transition: .5s all;
+    box-shadow: 1.5px 1.5px 12px rgb(174 174 174);
+}
+.navbar-nav{
+    margin: 8px auto;
+}
+.navbar-nav .active{
+    color: tomato !important;
+}
+.navbar-nav a{
+    font-weight: bold;
+    color: rgb(0, 26, 99) !important;
+    margin: 0 1rem;
+    font-size: 18px;
+    padding: 8px 15px;
+    text-decoration: none;
+    transition: .5s all;
+}
+.navbar-nav a:hover{
+    letter-spacing: 2px;
+    color: tomato !important;
+    box-shadow: 2px 2px 10px rgb(174 174 174);
+    border-radius: 5px;
+}
+

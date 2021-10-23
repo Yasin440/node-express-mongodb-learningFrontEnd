@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Authentication from './Authentication/Authentication';
+import initializeAuthentication from './Firebase/firebase.initialize';
+import Header from './Header/Header'
+import Home from './Home/Home';
+import Registration from './Registration/Registration';
+
+;
+initializeAuthentication();
 
 function App() {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Header></Header>
+        <Switch>
+          <Route exact path="/">
+            <Home></Home>
+          </Route>
+          <Route path="/home">
+            <Home></Home>
+          </Route>
+          <Route path="/registration">
+            <Registration></Registration>
+          </Route>
+          <Route path="/authentication">
+            <Authentication></Authentication>
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>
   );
 }
